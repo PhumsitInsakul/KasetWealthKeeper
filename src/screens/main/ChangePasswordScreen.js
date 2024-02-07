@@ -5,43 +5,24 @@ import { Shadow } from 'react-native-shadow-2';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 
-import { showCurrentEmail } from '../../firebase/AuthModel';
 import { changePassword } from '../../firebase/AuthModel';
 
 const TurquoiseHeader = ({ navigation }) => {
   return (
-    <View style={{ height: 80, backgroundColor: '#0ABAB5', alignItems: 'center', justifyContent: 'center' }}>
-      <Image source={require('../../assets/ovalBar.png')} style = {{bottom: '50%'}}  />
-
-      <TouchableOpacity style={{ position: 'absolute', left: 15, top:25 }} onPress={() => { navigation.goBack(); }}>
+    <View style={ styles.turquoiseHeaderContainer }>
+      <Image source={require('../../assets/ovalBar.png')} style = {{bottom: '50%'}} />
+      <TouchableOpacity style={ styles.arrowLeft } onPress={() => { navigation.goBack(); }}>
         <IconAntDesign name="arrowleft" size={30} color="#ffffff" />
       </TouchableOpacity>
-
-      <Text style={{ fontFamily: 'ZenOldMincho-Regular', fontSize: 32, color: '#FFFFFF',bottom:'200%' }}>Your Profile</Text>
+      <Text style={ styles.headerText }>Your Profile</Text>
     </View>
   );
 };
 
-const SecureEmail = ({ email2 }) => {
-  const securePart = email2.substring(0, email2.indexOf('@')).replace(/./g, '*');
-  const visiblePart = email2.substring(email2.indexOf('@'));
-  const secureEmail = securePart + visiblePart;
-
-  return <Text style={styles.profileButtonText}>{secureEmail}</Text>;
-};
-
 export const ChangePasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [email2, setEmail2] = useState('');
   const [oldPassword, setoldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
-  useEffect(() => {
-    showCurrentEmail(
-      (currentEmail) => setEmail2(currentEmail),
-      (error) => console.log(error)
-    );
-  }, []);
 
   const success = () => {
     console.log('Password changed successfully');
@@ -52,10 +33,6 @@ export const ChangePasswordScreen = ({ navigation }) => {
   const unsuccess = (msg) => {
     console.log(msg);
     Alert.alert(msg);
-  };
-
-  const handleEmailPress = () => {
-    console.log(`reveal email: ${email2}`);
   };
 
   const handleChangePassword = () => {
@@ -76,9 +53,13 @@ export const ChangePasswordScreen = ({ navigation }) => {
         navigation={navigation}
       />
       {/* Profile Button */}
-      <TouchableOpacity style={styles.profileButton} onPress={handleEmailPress}>
-      <SecureEmail email2={email2} />
-      </TouchableOpacity>
+      <View style={styles.buttonExclusive}>
+        <Image source={require('../../assets/circle_light.png')} style={{ width: 34, height: 34,marginRight:"6.9%" }}/>
+        <Image source={require('../../assets/lock.png')} style={{ width: 9.69, height: 9.69,position:'absolute',marginTop:'6.69%',marginLeft:'6.69%' }}/>
+        <TouchableOpacity>
+          <Text style={styles.buttonExclusiveText}>Change Password</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -98,7 +79,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
         />
 
         <TextInput
-          style={styles.inputBox}
+          style={styles.inputBoxExclusive}
           placeholder="New Password *"
           secureTextEntry = {true}
           value={newPassword}
@@ -106,7 +87,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
         />
 
         <TouchableOpacity style={styles.forgetButton} onPress={handleForgetPassword}>
-          <Text style={{color:'gray'}}>Forget Password?</Text>
+          <Text style={styles.forgetButtonText}>Forget Password?</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
@@ -122,6 +103,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFA',
   },
+  turquoiseHeaderContainer:{
+    height: 80, 
+    backgroundColor: '#0ABAB5', 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  },
+  arrowLeft:{
+    position: 'absolute', 
+    left: 15, 
+    top:'40%'
+  },
+  headerText: {
+    fontFamily: 'ZenOldMincho-Regular', 
+    fontSize: 32, 
+    color: '#FFFFFF',
+    bottom:'200%'
+  },
   inputContainer: {
     flex: 1,
     paddingVertical: 20,
@@ -129,14 +127,25 @@ const styles = StyleSheet.create({
     marginTop:'3%'
   },
   inputBox: {
-    height: 50,
+    height: 55,
     marginBottom: 15,
     paddingHorizontal: 15,
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 16,
     backgroundColor: '#FFFFFF',
-    marginHorizontal: '8%'
+    marginHorizontal: '8%',
+    fontFamily:'ZenOldMincho-Regular'
+  },
+  inputBoxExclusive: {
+    height: 55,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 16,
+    backgroundColor: '#FFFFFF',
+    marginHorizontal: '8%',
+    fontFamily:'ZenOldMincho-Regular'
   },
   button: {
     height: 50,
@@ -144,7 +153,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
-    marginHorizontal: '14%'
+    marginHorizontal: '14%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.75,
+    elevation: 3,
   },
   buttonText: {
     fontFamily: 'ZenOldMincho-Bold', 
@@ -154,15 +171,19 @@ const styles = StyleSheet.create({
   forgetButton: {
     alignSelf: 'flex-end',
     marginBottom: 25,
-    marginRight: '9%'
+    marginRight: '9%',
   },
-  profileButton: {
+  forgetButtonText: {
+    color: 'gray',
+    fontFamily:'ZenOldMincho-Regular'
+  },
+  buttonExclusive: {
+    flexDirection: 'row',
     height:60,
     marginTop:'5%',
     marginHorizontal: '14%',
     paddingLeft:15,
     paddingVertical: 15,
-    marginBottom: 0,
     borderRadius: 8,
     backgroundColor: '#FFFFFF',
 
@@ -175,8 +196,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.75,
     elevation: 3,
   },
-  profileButtonText: {
+  buttonExclusiveText: {
     fontSize: 14,
-    fontFamily: 'ZenOldMincho-Bold'
+    fontFamily: 'ZenOldMincho-Bold',
+    paddingTop:'2%'
   },
 });

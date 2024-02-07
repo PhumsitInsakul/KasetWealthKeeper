@@ -4,18 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthInput } from './AuthInput';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 
-import { resetPassword } from '../../firebase/AuthModel';
+import { forgetPassword } from '../../firebase/AuthModel';
 
 const TurquoiseHeader = ({ navigation }) => {
   return (
-    <View style={{ height: 80, backgroundColor: '#0ABAB5', alignItems: 'center', justifyContent: 'center' }}>
+    <View style={ styles.turquoiseHeaderContainer }>
       <Image source={require('../../assets/ovalBar.png')} style = {{bottom: '50%'}}  />
 
-      <TouchableOpacity style={{ position: 'absolute', left: 15, top:'40%' }} onPress={() => { navigation.goBack(); }}>
+      <TouchableOpacity style={ styles.arrowLeft } onPress={() => { navigation.goBack(); }}>
         <IconAntDesign name="arrowleft" size={30} color="#ffffff" />
       </TouchableOpacity>
       
-      <Text style={{ fontFamily: 'ZenOldMincho-Regular', fontSize: 32, color: '#FFFFFF',bottom:'200%' }}>Forget Password</Text>
+      <Text style={ styles.headerText }>Forget Password</Text>
     </View>
   );
 };
@@ -36,7 +36,7 @@ export const ForgetPasswordScreen = ({navigation}) => {
   function onSendPress() {
     console.log(`Send email to ${email}`)
     success(`Send email to ${email}`)
-    resetPassword(email, success, unsuccess)
+    forgetPassword(email, success, unsuccess)
   }
 
   return (
@@ -53,12 +53,11 @@ export const ForgetPasswordScreen = ({navigation}) => {
 
           <AuthInput placeholder='Email *' secureTextEntry={false} value={email} onChangeText={(text) => setEmail(text)} />
 
-          <TouchableOpacity style={{ height: 50, borderRadius: 16, backgroundColor: '#0ABAB5', 
-          justifyContent: 'center', alignItems: 'center', marginHorizontal: '14%'}}
+          <TouchableOpacity style={ styles.button }
             onPress={onSendPress}
           >
 
-            <Text style={{ fontFamily: 'ZenOldMincho-Bold', color: '#fffffa', fontSize: 16 }}>SUBMIT</Text>
+            <Text style={ styles.buttonText }>SUBMIT</Text>
           </TouchableOpacity>
           </View>
     </SafeAreaView>
@@ -69,5 +68,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFA',
+  },
+  turquoiseHeaderContainer:{
+    height: 80, 
+    backgroundColor: '#0ABAB5', 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  },
+  arrowLeft:{
+    position: 'absolute', 
+    left: 15, 
+    top:'40%'
+  },
+  headerText: {
+    fontFamily: 'ZenOldMincho-Regular', 
+    fontSize: 32, 
+    color: '#FFFFFF',
+    bottom:'200%'
+  },
+  button: {
+    height: 50, 
+    borderRadius: 16, 
+    backgroundColor: '#0ABAB5', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginHorizontal: '14%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.75,
+    elevation: 3,
+  },
+  buttonText: {
+    fontFamily: 'ZenOldMincho-Bold', 
+    color: '#fffffa', 
+    fontSize: 16
   },
 });

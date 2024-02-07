@@ -5,18 +5,6 @@ import { FinancialScreen } from '../screens/main/FinancialScreen';
 import { PetScreen } from '../screens/main/PetScreen';
 import { ProfileScreen } from '../screens/main/ProfileScreen';
 import { IncomeStackNav } from './IncomeStackNav';
-import { ForgetPasswordScreen } from '../screens/main/ForgetPasswordScreen';
-import { ChangePasswordScreen } from '../screens/main/ChangePasswordScreen';
-
-/*
-const OvalHeader = () => {
-    return (
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ width: '100%', height: 80, backgroundColor: '#0ABAB5', borderRadius: 50 }} />
-        </View>
-    );
-};
-*/
 
 export const BottomTabNav = ({navigation})=>{
     const BottomTab = createBottomTabNavigator()

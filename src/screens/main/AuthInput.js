@@ -9,14 +9,14 @@ export const AuthInput = (props) => {
       {secureTextEntry
         ? (<TextInput
           secureTextEntry={true}
-          style={regStyles.inputBox}
+          style={styles.inputBox}
           placeholder={props.placeholder}
           placeholderTextColor="gray"
           value={value}
           onChangeText={(text) => onChangeText(text)}
         ></TextInput>)
         : (<TextInput
-          style={regStyles.inputBox}
+          style={styles.inputBox}
           placeholder={props.placeholder}
           placeholderTextColor="gray"
           value={value}
@@ -27,7 +27,7 @@ export const AuthInput = (props) => {
   )
 }
 
-const regStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   inputBox:{
     height: 55,
     justifyContent:'center',

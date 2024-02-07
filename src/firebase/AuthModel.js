@@ -40,7 +40,7 @@ export const showCurrentEmail = (success, unsuccess) => {
   }
 };
 
-export const resetPassword = (email,success, unsuccess) => {
+export const forgetPassword = (email,success, unsuccess) => {
   auth().sendPasswordResetEmail(email)
     .then(() => {
       success()
@@ -61,7 +61,6 @@ export const changePassword = (email, oldPassword, newPassword, success, unsucce
     unsuccess(msg);
     return;
   }
-
   // Re-authenticate
   const credential = auth.EmailAuthProvider.credential(email, oldPassword);
   console.log("Re-authenticating user...");
@@ -70,7 +69,6 @@ export const changePassword = (email, oldPassword, newPassword, success, unsucce
   user.reauthenticateWithCredential(credential)
     .then(() => {
       console.log("User re-authenticated successfully.");
-
       // update the password
       user.updatePassword(newPassword)
         .then(() => {

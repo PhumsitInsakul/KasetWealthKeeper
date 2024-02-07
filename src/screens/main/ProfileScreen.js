@@ -7,12 +7,12 @@ import { signOut } from '../../firebase/AuthModel';
 
 const TurquoiseHeader = ({ navigation }) => {
   return (
-    <View style={{ height: 80, backgroundColor: '#0ABAB5', alignItems: 'center', justifyContent: 'center' }}>
-      <Image source={require('../../assets/ovalBar.png')} style = {{bottom: '50%'}}  />
-      <TouchableOpacity style={{ position: 'absolute', left: 15, top:25 }} onPress={() => { navigation.goBack(); }}>
+    <View style={ styles.turquoiseHeaderContainer }>
+      <Image source={require('../../assets/ovalBar.png')} style = {{bottom: '50%'}} />
+      <TouchableOpacity style={ styles.arrowLeft } onPress={() => { navigation.goBack(); }}>
         <IconAntDesign name="arrowleft" size={30} color="#ffffff" />
       </TouchableOpacity>
-      <Text style={{ fontFamily: 'ZenOldMincho-Regular', fontSize: 32, color: '#FFFFFF',bottom:'200%' }}>Your Profile</Text>
+      <Text style={ styles.headerText }>Your Profile</Text>
     </View>
   );
 };
@@ -35,6 +35,10 @@ export const ProfileScreen = ({ navigation }) => {
     );
   }, []);
 
+  const changeProfilePics = () => {
+    
+  };
+
   const handleEmailPress = () => {
     console.log(`reveal email: ${email}`);
   };
@@ -53,44 +57,88 @@ export const ProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#FFFFFA' }}>
+    <View style={ styles.container }>
       <TurquoiseHeader
         navigation={navigation}
       />
       {/* Profile Button */}
-      <TouchableOpacity style={styles.button} onPress={handleEmailPress}>
-      <SecureEmail email={email} />
-      </TouchableOpacity>
+      <View style={ styles.button }>
+        <TouchableOpacity onPress={changeProfilePics}>
+          <Image source={require('../../assets/profiledeluxe.png')} style={ styles.profileDeluxe }/>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleEmailPress}>
+          <SecureEmail email={email} />
+        </TouchableOpacity>
+      </View>
 
       {/* Chat-Bot Button */}
-      <TouchableOpacity style={styles.button} onPress={handleChatBot}>
-        <Text style={styles.chatbotText}>CHAT-BOT AI (BETA)</Text>
-      </TouchableOpacity>
+      <View style={ styles.button }>
+        <Image source={require('../../assets/circle_light.png')} style={ styles.circleLight }/>
+        <Image source={require('../../assets/logoGreen.png')} style={ styles.icons }/>
+
+        <TouchableOpacity onPress={handleChatBot}>
+          <Text style={styles.chatbotText}>CHAT-BOT AI (BETA)</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Account Button */}
-      <Text style={{marginLeft:'15%', fontFamily: 'ZenOldMincho-Bold',fontWeight:'bold'}}>Account</Text>
+      <Text style={ styles.AccountText }>Account</Text>
 
       {/* Change Password Button */}
-      <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
-        <Text style={styles.buttonText}>Change Password</Text>
-      </TouchableOpacity>
+      <View style={ styles.button }>
+        <Image source={require('../../assets/circle_light.png')} style={ styles.circleLight }/>
+        <Image source={require('../../assets/lock.png')} style={ styles.icons }/>
+
+        <TouchableOpacity onPress={handleChangePassword}>
+          <Text style={styles.buttonText}>Change Password</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleChangePassword}>
+          <Image source={require('../../assets/right_arrow.png')} style={ styles.rightArrowIcons }/>
+        </TouchableOpacity>
+      </View>
 
       {/* Log Out Button */}
-      <TouchableOpacity style={styles.logOutButton} onPress={handleLogOut}>
-        <Text style={styles.logOutText}>Log out</Text>
-      </TouchableOpacity>
+      <View style={styles.logOutButton}>
+        <TouchableOpacity onPress={handleLogOut}>
+          <Text style={styles.logOutText}>Log out</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = {
+  container:{
+    flex: 1, 
+    backgroundColor: '#FFFFFA'
+  },
+  turquoiseHeaderContainer:{
+    height: 80, 
+    backgroundColor: '#0ABAB5', 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  },
+  arrowLeft:{
+    position: 'absolute', 
+    left: 15, 
+    top:'40%'
+  },
+  headerText: {
+    fontFamily: 'ZenOldMincho-Regular', 
+    fontSize: 32, 
+    color: '#FFFFFF',
+    bottom:'200%'
+  },
   button: {
+    flexDirection: 'row',
     height:60,
     marginTop:'5%',
     marginHorizontal: '14%',
     paddingLeft:15,
     paddingVertical: 15,
-    marginBottom: 15,
+    marginBottom: 10,
     borderRadius: 8,
     backgroundColor: '#FFFFFF',
 
@@ -114,7 +162,7 @@ const styles = {
   logOutText: {
     color: 'lightgray',
     textAlign: 'center',
-    marginTop: 5,
+    marginTop: 10,
     fontSize: 16, 
     fontWeight: 'bold', 
     borderBottomColor: 'lightgray', 
@@ -122,8 +170,37 @@ const styles = {
   },
   chatbotText: {
     fontSize: 12,
-    fontFamily: 'ZenOldMincho-Bold',
+    
     color:'#0ABAB5',
     marginTop:7
+  },
+  circleLight: {
+    width: 34, 
+    height: 34,
+    marginRight:"6.9%"
+  },
+  profileDeluxe: {
+    width: 35, 
+    height: 35, 
+    marginRight:"6.9%"
+  },
+  icons: {
+    width: 9.69, 
+    height: 9.69,
+    position:'absolute',
+    marginTop:'6.69%',
+    marginLeft:'6.69%'
+  },
+  rightArrowIcons: {
+    width: 9.69, 
+    height: 9.69, 
+    marginLeft:'50%',
+    marginTop:'8%'
+  },
+  AccountText: {
+    marginTop:'3%', 
+    marginLeft:'15%', 
+    fontFamily: 'ZenOldMincho-Bold',
+    fontWeight:'bold'
   }
 };
